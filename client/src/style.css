@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.light {
+  --backgroundColor: 250 250 249;
+  --myMessage: 186 230 253;
+  --theirMessage: 245 245 244;
+  --fontColor: 0, 0, 0;
+  --chatBackground: 245 245 244;
+}
+
+.dark {
+  --backgroundColor: 41 37 36;
+  --myMessage: 2 132 199;
+  --theirMessage: 87 83 78;
+  --fontColor: 255, 255, 255;
+  --chatBackground: 68 64 60;
+}
