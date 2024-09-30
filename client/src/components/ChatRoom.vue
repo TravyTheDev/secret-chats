@@ -112,12 +112,12 @@ const resize = () => {
       <div class="flex flex-col mx-2" v-for="message in messages">
         <div class="self-end flex flex-col items-end max-w-[66%]" v-if="loginUser && message.userID == loginUser.id">
           <p class="font-semibold text-sm">{{ message.name }}:</p>
-          <p class="border border-myMessage rounded-l-lg rounded-br-lg bg-myMessage px-2 py-1">{{
+          <p class="border border-myMessage rounded-l-lg rounded-br-lg bg-myMessage px-2 py-1 break-words w-full">{{
             message.body }}</p>
         </div>
         <div class="self-start max-w-[66%]" v-else>
           <p class="font-semibold text-sm">{{ message.name }}:</p>
-          <p class="whitespace-pre-line border border-theirMessage rounded-r-lg rounded-bl-lg bg-theirMessage px-2 py-1">{{
+          <p class="break-words w-full border border-theirMessage rounded-r-lg rounded-bl-lg bg-theirMessage px-2 py-1">{{
             message.body }}</p>
         </div>
       </div>
