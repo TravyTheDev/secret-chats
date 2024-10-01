@@ -217,7 +217,7 @@ func (h *UserHandler) renewAccessToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jwt.SetCookieHandler(w, r, accessToken, int(duration), "authentication")
+	jwt.SetCookieHandler(w, r, accessToken, int(duration.Seconds()), "authentication")
 
 }
 
