@@ -1,3 +1,24 @@
+<template>
+    <div class="h-screen flex flex-col text-fontColor">
+        <div class="m-auto">
+            <div>
+                <p>{{t('auth.email')}}: </p>
+                <input class="border text-black" v-model="email" type="text">
+            </div>
+            <div>
+                <p>{{t('auth.password')}}: </p>
+                <input class="border text-black" v-model="password" type="password">
+            </div>
+            <button class="bg-myMessage px-2 py-1 rounded-lg hover:border border-slate-400 mt-2" @click="login">
+                {{t('auth.login')}}
+            </button>
+            <br />
+            <RouterLink to="/forgot_password" class="underline">{{t('auth.forgot_password')}}</RouterLink>
+            <p class="text-sm text-red-500 whitespace-pre-line" v-if="isShowError">{{ errorValue }}</p>
+        </div>
+    </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue';
 import { axiosInstance } from '../api';
@@ -25,28 +46,5 @@ const login = async () => {
     }
 }
 </script>
-
-<template>
-    <div class="h-screen flex flex-col text-fontColor">
-        <div class="m-auto">
-            <div>
-                <p>{{t('auth.email')}}: </p>
-                <input class="border text-black" v-model="email" type="text">
-            </div>
-            <div>
-                <p>{{t('auth.password')}}: </p>
-                <input class="border text-black" v-model="password" type="password">
-            </div>
-            <button class="bg-myMessage px-2 py-1 rounded-lg hover:border border-slate-400 mt-2" @click="login">
-                {{t('auth.login')}}
-            </button>
-            <br />
-            <RouterLink to="/forgot_password" class="underline">{{t('auth.forgot_password')}}</RouterLink>
-            <p class="text-sm text-red-500 whitespace-pre-line" v-if="isShowError">{{ errorValue }}</p>
-        </div>
-    </div>
-</template>
-
-
 
 <style scoped></style>

@@ -1,3 +1,33 @@
+<template>
+    <div class="p-2 border border-chatBackground max-w-screen-md mx-auto text-sm">
+        <div class="flex justify-between text-fontColor">
+            <div>
+                <RouterLink to="/">
+                    << {{ t('navbar.home') }}</RouterLink>
+            </div>
+            <div>
+                <label v-if="colorTheme == 'light' || !colorTheme" for="dark_mode">{{ t('navbar.dark_mode') }}</label>
+                <input class="hidden" value="dark" v-model="colorTheme" name="theme_choice" id="dark_mode" type="radio">
+                <label v-if="colorTheme == 'dark'" for="light_mode">{{t('navbar.light_mode')}}</label>
+                <input class="hidden" value="light" v-model="colorTheme" name="theme_choice" id="light_mode"
+                    type="radio">
+            </div>
+            <div>
+                <select class="bg-backgroundColor text-fontColor" v-model="selectedLanguage">
+                    <option v-for="lang in languages" :value="lang.value">{{ lang.label }}</option>
+                </select>
+            </div>
+            <span v-if="loginUser" @click="logout"
+                class="hover:cursor-pointer border px-1 rounded-lg border-red-300">{{t('navbar.logout')}}</span>
+            <div v-else>
+                <RouterLink class="border px-1 rounded-lg border-red-300 mr-1" to="/login">{{t('navbar.login')}}</RouterLink>
+                <RouterLink class="border px-1 rounded-lg border-red-300" to="/register">{{t('navbar.register')}}</RouterLink>
+            </div>
+        </div>
+        <InvitationModal v-if="messageData" :message="messageData" @close-modal="messageData = ''" />
+    </div>
+</template>
+
 <script setup lang="ts">
 import { inject, onMounted, ref, Ref, watch } from 'vue';
 import { User } from '../App.vue';
@@ -71,35 +101,5 @@ watch(selectedLanguage, () => {
 })
 
 </script>
-
-<template>
-    <div class="p-2 border border-chatBackground max-w-screen-md mx-auto text-sm">
-        <div class="flex justify-between text-fontColor">
-            <div>
-                <RouterLink to="/">
-                    << {{ t('navbar.home') }}</RouterLink>
-            </div>
-            <div>
-                <label v-if="colorTheme == 'light' || !colorTheme" for="dark_mode">{{ t('navbar.dark_mode') }}</label>
-                <input class="hidden" value="dark" v-model="colorTheme" name="theme_choice" id="dark_mode" type="radio">
-                <label v-if="colorTheme == 'dark'" for="light_mode">{{t('navbar.light_mode')}}</label>
-                <input class="hidden" value="light" v-model="colorTheme" name="theme_choice" id="light_mode"
-                    type="radio">
-            </div>
-            <div>
-                <select class="bg-backgroundColor text-fontColor" v-model="selectedLanguage">
-                    <option v-for="lang in languages" :value="lang.value">{{ lang.label }}</option>
-                </select>
-            </div>
-            <span v-if="loginUser" @click="logout"
-                class="hover:cursor-pointer border px-1 rounded-lg border-red-300">{{t('navbar.logout')}}</span>
-            <div v-else>
-                <RouterLink class="border px-1 rounded-lg border-red-300 mr-1" to="/login">{{t('navbar.login')}}</RouterLink>
-                <RouterLink class="border px-1 rounded-lg border-red-300" to="/register">{{t('navbar.register')}}</RouterLink>
-            </div>
-        </div>
-        <InvitationModal v-if="messageData" :message="messageData" @close-modal="messageData = ''" />
-    </div>
-</template>
 
 <style scoped></style>

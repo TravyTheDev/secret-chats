@@ -1,3 +1,32 @@
+<template>
+  <div class="flex flex-col overflow-y-hidden mx-auto max-w-screen-md bg-chatBackground text-fontColor">
+    <div ref="chatBody" class="mx-2 h-[80vh] pb-4 overflow-y-auto chat-body whitespace-pre-line">
+      <div class="flex flex-col mx-2" v-for="message in messages">
+        <div class="self-end flex flex-col items-end max-w-[66%]" v-if="loginUser && message.userID == loginUser.id">
+          <p class="font-semibold text-sm">{{ message.name }}:</p>
+          <p class="border border-myMessage rounded-l-lg rounded-br-lg bg-myMessage px-2 py-1 break-words w-full">{{
+            message.body }}</p>
+        </div>
+        <div class="self-start max-w-[66%]" v-else>
+          <p class="font-semibold text-sm">{{ message.name }}:</p>
+          <p class="break-words w-full border border-theirMessage rounded-r-lg rounded-bl-lg bg-theirMessage px-2 py-1">{{
+            message.body }}</p>
+        </div>
+      </div>
+    </div>
+    <div v-if="conn" class="w-full bg-backgroundColor fixed bottom-0">
+      <span class="ml-2">{{t('chats.current_room')}}: {{ roomName }}</span>
+      <div class="bg-backgroundColor py-2 flex gap-2 max-w-screen-md mx-2 text-nowrap">
+        <button @click="toggleIsShowInvite">{{t('chats.invite')}}</button>
+        <textarea @input="resize" ref="textArea" rows="1" class="border rounded-sm w-full bg-chatBackground my-0 py-2 overflow-y-hidden" v-model="sentMessage"></textarea>
+        <button @click="send">{{t('chats.send')}}>></button>
+      </div>
+    </div>
+    <InviteModal :roomName="roomName" :user="loginUser" :roomID="roomID" v-if="isShowInvite"
+      @close-modal="toggleIsShowInvite" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
@@ -105,35 +134,6 @@ const resize = () => {
   }
 }
 </script>
-
-<template>
-  <div class="flex flex-col overflow-y-hidden mx-auto max-w-screen-md bg-chatBackground text-fontColor">
-    <div ref="chatBody" class="mx-2 h-[80vh] pb-4 overflow-y-auto chat-body whitespace-pre-line">
-      <div class="flex flex-col mx-2" v-for="message in messages">
-        <div class="self-end flex flex-col items-end max-w-[66%]" v-if="loginUser && message.userID == loginUser.id">
-          <p class="font-semibold text-sm">{{ message.name }}:</p>
-          <p class="border border-myMessage rounded-l-lg rounded-br-lg bg-myMessage px-2 py-1 break-words w-full">{{
-            message.body }}</p>
-        </div>
-        <div class="self-start max-w-[66%]" v-else>
-          <p class="font-semibold text-sm">{{ message.name }}:</p>
-          <p class="break-words w-full border border-theirMessage rounded-r-lg rounded-bl-lg bg-theirMessage px-2 py-1">{{
-            message.body }}</p>
-        </div>
-      </div>
-    </div>
-    <div v-if="conn" class="w-full bg-backgroundColor fixed bottom-0">
-      <span class="ml-2">{{t('chats.current_room')}}: {{ roomName }}</span>
-      <div class="bg-backgroundColor py-2 flex gap-2 max-w-screen-md mx-2 text-nowrap">
-        <button @click="toggleIsShowInvite">{{t('chats.invite')}}</button>
-        <textarea @input="resize" ref="textArea" rows="1" class="border rounded-sm w-full bg-chatBackground my-0 py-2 overflow-y-hidden" v-model="sentMessage"></textarea>
-        <button @click="send">{{t('chats.send')}}>></button>
-      </div>
-    </div>
-    <InviteModal :roomName="roomName" :user="loginUser" :roomID="roomID" v-if="isShowInvite"
-      @close-modal="toggleIsShowInvite" />
-  </div>
-</template>
 
 <style scoped>
 .chat-body {
