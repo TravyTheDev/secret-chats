@@ -90,10 +90,12 @@ func (h *WSHandler) joinRoom(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.hub.Register <- cl
-	h.hub.Broadcast <- m
+	if len(h.hub.Rooms[roomID].Clients) != 0 {
+		h.hub.Broadcast <- m
+	}
 
 	go cl.writeMessage()
-	cl.readMesasge(h.hub)
+	cl.readMessage(h.hub)
 }
 
 func (h *WSHandler) getRooms(w http.ResponseWriter, r *http.Request) {

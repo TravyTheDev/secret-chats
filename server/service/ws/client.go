@@ -1,8 +1,6 @@
 package ws
 
 import (
-	"log"
-
 	"github.com/gorilla/websocket"
 )
 
@@ -36,7 +34,7 @@ func (c *Client) writeMessage() {
 	}
 }
 
-func (c *Client) readMesasge(hub *Hub) {
+func (c *Client) readMessage(hub *Hub) {
 	defer func() {
 		hub.Unregister <- c
 		c.Conn.Close()
@@ -46,7 +44,7 @@ func (c *Client) readMesasge(hub *Hub) {
 		_, m, err := c.Conn.ReadMessage()
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				log.Printf("error: %v", err)
+				return
 			}
 			break
 		}

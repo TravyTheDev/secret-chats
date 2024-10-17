@@ -119,7 +119,6 @@ func (h *UserHandler) handleLogin(w http.ResponseWriter, r *http.Request) {
 	h.setCookiesAndSession(u, w, r)
 
 	w.Header().Add("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
 }
 
 func (h *UserHandler) handleLogout(w http.ResponseWriter, r *http.Request) {

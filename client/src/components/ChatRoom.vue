@@ -32,6 +32,7 @@ import { nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import InviteModal from "./InviteModal.vue";
 import { useI18n } from 'vue-i18n';
+import { v4 as uuidv4 } from "uuid";
 
 const {t} = useI18n()
 
@@ -49,6 +50,7 @@ const textArea = ref()
 const isShowInvite = ref(false)
 
 type Message = {
+  messageID: string;
   userID: string;
   name: string;
   body: string;
@@ -93,6 +95,7 @@ const send = () => {
 const displayMessage = (e: MessageEvent) => {
   const data = JSON.parse(e.data);
   const message: Message = {
+    messageID: uuidv4(),
     userID: data.userID,
     body: data.body,
     name: data.username
@@ -100,9 +103,14 @@ const displayMessage = (e: MessageEvent) => {
   messages.value.push(message);
   scrollToBottom(data.userID)
   setTimeout(() => {
-    messages.value.shift()
+    removeMessage(message.messageID)
   }, 30000)
 };
+
+const removeMessage = (id: string) => {
+  const filtered = messages.value.filter((item) => item.messageID !== id)
+  messages.value = filtered
+}
 
 const toggleIsShowInvite = () => {
   isShowInvite.value = !isShowInvite.value

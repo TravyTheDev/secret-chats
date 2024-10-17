@@ -1,5 +1,5 @@
 <template>
-    <div class="p-2 border border-chatBackground max-w-screen-md mx-auto text-sm">
+    <div class="relative p-2 border border-chatBackground max-w-screen-md mx-auto text-sm">
         <div class="flex justify-between text-fontColor">
             <div>
                 <RouterLink to="/">
