@@ -74,14 +74,6 @@ func (h *WSHandler) joinRoom(w http.ResponseWriter, r *http.Request) {
 	userID := mux.Vars(r)["user_id"]
 	username := mux.Vars(r)["username"]
 
-	if _, ok := h.hub.Rooms[roomID]; !ok {
-		h.hub.Rooms[roomID] = &Room{
-			ID:      roomID,
-			Name:    "unknown",
-			Clients: make(map[string]*Client),
-		}
-	}
-
 	cl := &Client{
 		Conn:     conn,
 		Message:  make(chan *Message, 10),

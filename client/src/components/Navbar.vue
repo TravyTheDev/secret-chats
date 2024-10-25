@@ -50,7 +50,7 @@ const logout = async () => {
 }
 
 const colorTheme = ref("")
-
+const timeout = ref()
 const evtSource = ref()
 
 const setEventSource = () => {
@@ -74,8 +74,12 @@ const messageData = ref()
 watch(evtSource, () => {
     if (evtSource.value) {
         evtSource.value.onmessage = (e: MessageEvent) => {
+            clearTimeout(timeout.value)
             const data = JSON.parse(e.data)
             messageData.value = data
+            timeout.value = setTimeout(() => {
+                messageData.value = undefined
+            }, 10000)
         }
         evtSource.value.onerror = (err: MessageEvent) => {
             console.error("event source failed", err)
