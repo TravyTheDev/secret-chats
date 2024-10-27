@@ -55,6 +55,6 @@ func (s *APIServer) Run() error {
 	inviteBroker := ws.NewBroker(secretKey)
 	inviteBroker.RegisterRoutes(subRouter)
 
-	fmt.Printf("Listening on : %s\n", s.addr)
+	fmt.Printf("Listening on %s\n", s.addr)
 	return http.ListenAndServe(s.addr, handler)
 }

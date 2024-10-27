@@ -23,6 +23,7 @@ const email = ref('')
 const errorValue = ref('')
 
 const requestPasswordReset = async () => {
+    return
     try {
         await axiosInstance.post('/mailer/forgot_password', {
             email: email.value
