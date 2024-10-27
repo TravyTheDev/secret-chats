@@ -90,12 +90,12 @@ func (m *MailHandler) sendForgotPasswordEmail(w http.ResponseWriter, r *http.Req
 		log.Fatalf("failed to send mail: %s", err)
 	}
 
-	passwordResetToken, _, err := m.jwtMaker.CreatePasswordResetToken(req.Email, numbers, time.Minute*5)
+	passwordResetToken, _, err := m.jwtMaker.CreatePasswordResetToken(req.Email, numbers, time.Duration((time.Minute * 5).Seconds()))
 	if err != nil {
 		http.Error(w, "error creating token", http.StatusInternalServerError)
 		return
 	}
-	jwt.SetCookieHandler(w, r, passwordResetToken, int(time.Minute*5), "password_reset")
+	jwt.SetCookieHandler(w, r, passwordResetToken, int((time.Minute * 5).Seconds()), "password_reset")
 }
 
 func rangeIn(low, hi int) int {
