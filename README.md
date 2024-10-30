@@ -12,6 +12,14 @@ This started mostly because everybody says to just use an auth provider when it'
 
 I also wanted to do live notifications and server side i18n on errors.
 
+### Usage
+
+You need to be registered and logged in.
+
+If you are planning on joining a room at any time a notification in the bottom right can come.
+
+If you are creating a room a room can have any name. Once in the chat click "invite" or "招待" if in Japanese. You must enter the invitee's full email and then click their name after it pops up. The invite will send automatically.
+
 ### Optimizations
 
 The overall design is kind of bad. I don't know what's going on with the navbar. 
