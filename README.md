@@ -7,6 +7,7 @@ Messages auto delete after 30 seconds and rooms auto delete after 10 seconds if 
 Japanese and English available.
 
 https://www.traviskleckley.com/private-chats/
+
 ![](https://github.com/TravyTheDev/personal-site/raw/main/public/images/private-chats.gif?raw=true)
 
 This started mostly because everybody says to just use an auth provider when it's really not that bad to write your own and an axios interceptor. 
