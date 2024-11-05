@@ -30,6 +30,8 @@ Right now the navbar is in multiple other components when I should have just mad
 
 I need to pay for a mail server...
 
+For whatever reason when you invite someone to the room, the countdown to delete the messages stops so whenever you invite someone your messages are cleared to avoid being able to save messages.
+
 ### Lessons Learned
 
 For server events users need a slice of channels because if they open up another browser it'll all hang.

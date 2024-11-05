@@ -9,21 +9,24 @@
         </div>
         <div class="self-start max-w-[66%]" v-else>
           <p class="font-semibold text-sm">{{ message.name }}:</p>
-          <p class="break-words w-full border border-theirMessage rounded-r-lg rounded-bl-lg bg-theirMessage px-2 py-1">{{
-            message.body }}</p>
+          <p class="break-words w-full border border-theirMessage rounded-r-lg rounded-bl-lg bg-theirMessage px-2 py-1">
+            {{
+              message.body }}</p>
         </div>
       </div>
     </div>
     <div v-if="conn" class="w-full bg-backgroundColor fixed bottom-0">
-      <span class="ml-2">{{t('chats.current_room')}}: {{ roomName }}</span>
+      <span class="ml-2">{{ t('chats.current_room') }}: {{ roomName }}</span>
       <div class="bg-backgroundColor py-2 flex gap-2 max-w-screen-md mx-2 text-nowrap">
-        <button @click="toggleIsShowInvite">{{t('chats.invite')}}</button>
-        <textarea @input="resize" ref="textArea" rows="1" class="border rounded-sm w-full bg-chatBackground my-0 py-2 overflow-y-hidden" v-model="sentMessage"></textarea>
-        <button @click="send">{{t('chats.send')}}>></button>
+        <button @click="toggleIsShowInvite">{{ t('chats.invite') }}</button>
+        <textarea @input="resize" ref="textArea" rows="1"
+          class="border rounded-sm w-full bg-chatBackground my-0 py-2 overflow-y-hidden"
+          v-model="sentMessage"></textarea>
+        <button @click="send">{{ t('chats.send') }}>></button>
       </div>
     </div>
     <InviteModal :roomName="roomName" :user="loginUser" :roomID="roomID" v-if="isShowInvite"
-      @close-modal="toggleIsShowInvite" />
+      @close-modal="toggleIsShowInvite" @clear="clear" />
   </div>
 </template>
 
@@ -34,7 +37,7 @@ import InviteModal from "./InviteModal.vue";
 import { useI18n } from 'vue-i18n';
 import { v4 as uuidv4 } from "uuid";
 
-const {t} = useI18n()
+const { t } = useI18n()
 
 const props = defineProps({
   loginUser: Object,
@@ -111,6 +114,10 @@ const displayMessage = (e: MessageEvent) => {
   }, 30000)
 };
 
+const clear = () => {
+  messages.value.length = 0
+}
+
 const removeMessage = (id: string) => {
   const filtered = messages.value.filter((item) => item.messageID !== id)
   messages.value = filtered
@@ -125,7 +132,7 @@ onUnmounted(() => {
 })
 
 const scrollToBottom = (id: number) => {
-  if((Number(id) === props.loginUser?.id) || chatBody.value.scrollTop + 5 > chatBody.value.scrollHeight - chatBody.value.clientHeight){
+  if ((Number(id) === props.loginUser?.id) || chatBody.value.scrollTop + 5 > chatBody.value.scrollHeight - chatBody.value.clientHeight) {
     nextTick(() => {
       chatBody.value.scrollTop = chatBody.value.scrollHeight
     })
@@ -134,14 +141,14 @@ const scrollToBottom = (id: number) => {
 
 const resize = () => {
   textArea.value.style.height = 'auto'
-  if(textArea.value.scrollHeight < 104){
+  if (textArea.value.scrollHeight < 104) {
     textArea.value.style.height = textArea.value.scrollHeight + 'px'
   } else {
     textArea.value.style.height = '6.5rem'
   }
-  if(textArea.value.scrollHeight > 40){
+  if (textArea.value.scrollHeight > 40) {
     textArea.value.classList.add('expanded-text')
-  }else{
+  } else {
     textArea.value.classList.remove('expanded-text')
   }
 }
@@ -151,7 +158,8 @@ const resize = () => {
 .chat-body {
   scroll-behavior: smooth;
 }
-.expanded-text{
+
+.expanded-text {
   overflow-y: auto;
 }
 </style>

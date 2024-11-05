@@ -35,7 +35,7 @@ const loginUser = inject<Ref<User | undefined>>("loginUser")
 
 const props = defineProps<props>()
 
-const emit = defineEmits(['close-modal'])
+const emit = defineEmits(['close-modal', 'clear'])
 const searchText = ref('')
 const message = ref('')
 const user = ref<User>()
@@ -70,6 +70,7 @@ const handleInvite = async (id: number) => {
         roomID: props.roomID,
         roomName: props.roomName
     })
+    emit('clear')
     emit('close-modal')
 }
 
