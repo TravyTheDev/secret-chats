@@ -57,7 +57,7 @@ const register = async () => {
             password: password.value,
             passwordConfirm: passwordConfirm.value,
         })
-        window.location.href = "/"
+        window.location.href = "/private-chats/"
     } catch (error: any) {
         isShowError.value = true
         errorValue.value = error.response.data

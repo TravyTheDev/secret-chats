@@ -43,11 +43,11 @@ locale.value = selectedLanguage.value
 
 const loginUser = inject<Ref<User | undefined>>("loginUser")
 const eventSourceAddr = import.meta.env.VITE_APP_BASE_URL
-const PORT = import.meta.env.VITE_APP_PORT
+// const PORT = import.meta.env.VITE_APP_PORT
 
 const logout = async () => {
     await axiosInstance.post('/logout')
-    window.location.href = "/"
+    window.location.href = "/private-chats/"
 }
 
 const colorTheme = ref("")
@@ -57,7 +57,7 @@ const evtSource = ref()
 const setEventSource = () => {
     if (loginUser && loginUser.value) {
         evtSource.value = new EventSource(
-            `${eventSourceAddr}:${PORT}/api/v1/sse/stream/${loginUser.value.id}`
+            `${eventSourceAddr}/api/v1/sse/stream/${loginUser.value.id}`
         )
     }
 }

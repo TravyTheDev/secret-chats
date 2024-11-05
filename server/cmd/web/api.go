@@ -30,13 +30,14 @@ func NewApiServer(addr string, db *sql.DB) *APIServer {
 func (s *APIServer) Run() error {
 	secretKey := os.Getenv("JWT_KEY")
 	frontUrl := os.Getenv("FRONT_URL")
+	frontUrlWWW := os.Getenv("FRONT_URL_WWW")
 	router := mux.NewRouter()
 
 	subRouter := router.PathPrefix("/api/v1").Subrouter()
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{frontUrl},
+		AllowedOrigins:   []string{frontUrl, frontUrlWWW},
 		AllowCredentials: true,
-		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodDelete, http.MethodPut, http.MethodPatch},
+		AllowedMethods:   []string{"OPTIONS", http.MethodGet, http.MethodPost, http.MethodDelete, http.MethodPut, http.MethodPatch},
 	})
 	langMap := i18n.LoadLocaleFiles()
 	handler := c.Handler(router)

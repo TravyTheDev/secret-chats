@@ -44,7 +44,7 @@ const route = useRoute();
 const roomID = route.params.roomID;
 const roomName = route.params.name;
 const websocketAddr = import.meta.env.VITE_APP_WS_ADDR
-const PORT = import.meta.env.VITE_APP_PORT
+// const PORT = import.meta.env.VITE_APP_PORT
 const chatBody = ref()
 const textArea = ref()
 
@@ -64,7 +64,7 @@ const conn = ref();
 const setWebsocket = () => {
   if (props.loginUser) {
     conn.value = new WebSocket(
-      `${websocketAddr}:${PORT}/api/v1/ws/join_room/${roomID}/${props.loginUser.id}/${props.loginUser.username}`
+      `${websocketAddr}/api/v1/ws/join_room/${roomID}/${props.loginUser.id}/${props.loginUser.username}`
     );
   }
 }
@@ -87,6 +87,9 @@ const send = () => {
     sentMessage.value = "";
     nextTick(() => {
       resize()
+      if (window.innerWidth > 640) {
+        textArea.value.focus()
+      }
     })
   } catch (error) {
     console.log(error);
